@@ -7,6 +7,8 @@ var delayTime;
 var totalVelocity;
 var currentLocation = new Object();
 var lastCheckedLocation = new Object();
+var collisionError = 10;
+var avoidanceError = 40;
 async function startProgram() {
 	lastCheckedLocation.x = 0;
 	lastCheckedLocation.y = 0;
@@ -20,7 +22,7 @@ async function startProgram() {
 			currentLocation.y = getLocation().y;
 			totalVelocity = Math.sqrt((getVelocity().x**2) + (getVelocity().y**2))
 			for(var i = 0; i<collisionCounter; i++){
-				if((currentLocation.x > xcollisionArray[i] - 40) && (currentLocation.x < xcollisionArray[i] + 40) && (currentLocation.y > ycollisionArray[i] - 40) && (currentLocation.y < ycollisionArray[i] + 40)){
+				if((currentLocation.x > xcollisionArray[i] - avoidanceError) && (currentLocation.x < xcollisionArray[i] + avoidanceError) && (currentLocation.y > ycollisionArray[i] - avoidanceError) && (currentLocation.y < ycollisionArray[i] + avoidanceError)){
 					setMainLed({r:0, g:255, b:0}); //Green
 					setSpeed(reverseSpeed);
 					await delay(1); 
@@ -33,7 +35,7 @@ async function startProgram() {
 					break;
 				}
 			}			
-			if((currentLocation.x < lastCheckedLocation.x +10) && (currentLocation.x > lastCheckedLocation.x - 10) && (currentLocation.y < lastCheckedLocation.y+10) && (currentLocation.y > lastCheckedLocation.y - 10) /*&& totalVelocity == 0*/){
+			if((currentLocation.x < lastCheckedLocation.x +collisionError) && (currentLocation.x > lastCheckedLocation.x - collisionError) && (currentLocation.y < lastCheckedLocation.y+collisionError) && (currentLocation.y > lastCheckedLocation.y - collisionError) /*&& totalVelocity == 0*/){
 				//Location is approx. the same as last check
 				stopRoll();
 				xcollisionArray[collisionCounter] = currentLocation.x; //Add location to array	
