@@ -23,6 +23,7 @@ async function startProgram() {
 			totalVelocity = Math.sqrt((getVelocity().x**2) + (getVelocity().y**2))
 			for(var i = 0; i<collisionCounter; i++){
 				if((currentLocation.x > xcollisionArray[i] - avoidanceError) && (currentLocation.x < xcollisionArray[i] + avoidanceError) && (currentLocation.y > ycollisionArray[i] - avoidanceError) && (currentLocation.y < ycollisionArray[i] + avoidanceError)){
+					//Current location is approx. equal to a collision location
 					setMainLed({r:0, g:255, b:0}); //Green
 					setSpeed(reverseSpeed);
 					await delay(1); 
